@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/material-tweet/static/js/main.f2805844.chunk.js",
+    "main.js.map": "/material-tweet/static/js/main.f2805844.chunk.js.map",
+    "runtime-main.js": "/material-tweet/static/js/runtime-main.a691de40.js",
+    "runtime-main.js.map": "/material-tweet/static/js/runtime-main.a691de40.js.map",
+    "static/css/2.86df1a54.chunk.css": "/material-tweet/static/css/2.86df1a54.chunk.css",
+    "static/js/2.47d51f1d.chunk.js": "/material-tweet/static/js/2.47d51f1d.chunk.js",
+    "static/js/2.47d51f1d.chunk.js.map": "/material-tweet/static/js/2.47d51f1d.chunk.js.map",
+    "index.html": "/material-tweet/index.html",
+    "precache-manifest.5ed934b7b925d50ee00dcb99417236e1.js": "/material-tweet/precache-manifest.5ed934b7b925d50ee00dcb99417236e1.js",
+    "service-worker.js": "/material-tweet/service-worker.js",
+    "static/css/2.86df1a54.chunk.css.map": "/material-tweet/static/css/2.86df1a54.chunk.css.map",
+    "static/media/index.css": "/material-tweet/static/media/roboto-latin-900italic.ebf6d164.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a691de40.js",
+    "static/css/2.86df1a54.chunk.css",
+    "static/js/2.47d51f1d.chunk.js",
+    "static/js/main.f2805844.chunk.js"
+  ]
+}
