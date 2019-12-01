@@ -74,7 +74,11 @@ const App = ({ name, date, otherActions, text, actions }: TweetProps) => {
       <ThemeProvider theme={defaultTheme}>
         <Card>
           <CardHeader
-            avatar={<StyledAvatar aria-label="recipe">R</StyledAvatar>}
+            avatar={
+              <StyledAvatar aria-label="recipe">
+                {name.slice(0, 1)}
+              </StyledAvatar>
+            }
             action={
               otherActions &&
               otherActions.length > 0 && (
