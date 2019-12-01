@@ -2,7 +2,6 @@
   "name": "material-tweet",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ossan-engineer.github.io/material-tweet",
   "dependencies": {
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
