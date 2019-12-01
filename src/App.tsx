@@ -4,7 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,12 +17,47 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { StylesProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import styled, { ThemeProvider } from 'styled-components';
+import moment from 'moment';
+
+interface OtherAction {
+  label: string;
+  handler: () => void;
+}
+
+interface TweetProps {
+  name: string;
+  date: Date;
+  otherActions?: OtherAction[];
+  text: string;
+  actions: {
+    comment?: {
+      count: number;
+      handler: () => void;
+    };
+    like?: {
+      count: number;
+      handler: () => void;
+    };
+    retweet?: {
+      count: number;
+      handler: () => void;
+    };
+    share?: {
+      count: number;
+      handler: () => void;
+    };
+  };
+}
 
 const StyledAvatar = styled(Avatar)`
   background-color: ${red[500]};
 `;
 
-const App = () => {
+const Count = styled.div`
+  margin-right: 5px;
+`;
+
+const App = ({ name, date, otherActions, text, actions }: TweetProps) => {
   const defaultTheme = createMuiTheme();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -41,17 +76,20 @@ const App = () => {
           <CardHeader
             avatar={<StyledAvatar aria-label="recipe">R</StyledAvatar>}
             action={
-              <IconButton
-                aria-label="settings"
-                aria-controls="simple-menu"
-                aria-haspopup="true"
-                onClick={handleClick}
-              >
-                <ExpandMoreIcon />
-              </IconButton>
+              otherActions &&
+              otherActions.length > 0 && (
+                <IconButton
+                  aria-label="other-actions"
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              )
             }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
+            title={name}
+            subheader={moment(date).fromNow()}
           />
           <CardContent>
             <Menu
@@ -60,36 +98,71 @@ const App = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Item1</MenuItem>
-              <MenuItem onClick={handleClose}>Item2</MenuItem>
-              <MenuItem onClick={handleClose}>Item3</MenuItem>
+              {otherActions &&
+                otherActions.map(({ label, handler }) => (
+                  <MenuItem
+                    key={label}
+                    onClick={() => {
+                      handler();
+                      handleClose();
+                    }}
+                  >
+                    {label}
+                  </MenuItem>
+                ))}
             </Menu>
             <Typography variant="body2" color="textSecondary" component="p">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {text}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="comment">
-              <ModeCommentOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="retweet">
-              <RepeatOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="add to favorites">
-              <FavoriteBorderOutlinedIcon />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareOutlinedIcon />
-            </IconButton>
+            {actions.comment && (
+              <>
+                <IconButton
+                  aria-label="comment"
+                  onClick={actions.comment.handler}
+                >
+                  <ModeCommentOutlinedIcon />
+                </IconButton>
+                {actions.comment.count > 0 && (
+                  <Count>{actions.comment.count}</Count>
+                )}
+              </>
+            )}
+            {actions.retweet && (
+              <>
+                <IconButton
+                  aria-label="retweet"
+                  onClick={actions.retweet.handler}
+                >
+                  <RepeatOutlinedIcon />
+                </IconButton>
+                {actions.retweet.count > 0 && (
+                  <Count>{actions.retweet.count}</Count>
+                )}{' '}
+              </>
+            )}
+            {actions.like && (
+              <>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={actions.like.handler}
+                >
+                  <FavoriteBorderOutlinedIcon />
+                </IconButton>
+                {actions.like.count > 0 && <Count>{actions.like.count}</Count>}{' '}
+              </>
+            )}
+            {actions.share && (
+              <>
+                <IconButton aria-label="share" onClick={actions.share.handler}>
+                  <ShareOutlinedIcon />
+                </IconButton>
+                {actions.share.count > 0 && (
+                  <Count>{actions.share.count}</Count>
+                )}{' '}
+              </>
+            )}
           </CardActions>
         </Card>
       </ThemeProvider>
